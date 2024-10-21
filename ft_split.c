@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "libft.h"
 
-size_t	ft_strlen_split(const char *s, char c)
+static size_t	ft_strlen_split(const char *s, char c)
 {
 	size_t	i;
 
@@ -24,7 +24,7 @@ size_t	ft_strlen_split(const char *s, char c)
 /*Count the number of words separated by c in the string s
  * Return value : int = nb_mot
  */
-int static	count_nbwords(const char *s, char c)
+static int	count_nbwords(const char *s, char c)
 {
 	int	cpt;
 	int	i;
@@ -49,7 +49,7 @@ int static	count_nbwords(const char *s, char c)
 /*Secure the allocation maked by calloc
  * Return valule : 1 if the fonction make change and 0 if not
  */
-size_t	secur_res(char **res)
+static size_t	secur_res(char **res)
 {
 	if (!*res)
 	{
@@ -65,7 +65,7 @@ size_t	secur_res(char **res)
  * number of word in a chain of character chain
  * Return value : char ** = res calloc
  */
-char static	**set_res(const char *s, char c, int cpt)
+static char	**set_res(const char *s, char c, int cpt)
 {
 	char	**res;
 	size_t	i;

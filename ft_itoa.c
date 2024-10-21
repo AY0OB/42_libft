@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "libft.h"
 
-size_t static	nb_num(int nb)
+static size_t	nb_num(int nb)
 {
 	size_t	cpt;
 

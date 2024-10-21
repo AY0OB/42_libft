@@ -1,52 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amairia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/11 16:30:40 by amairia           #+#    #+#             */
-/*   Updated: 2024/10/14 21:21:11 by amairia          ###   ########.fr       */
+/*   Created: 2024/10/17 15:35:50 by amairia           #+#    #+#             */
+/*   Updated: 2024/10/17 13:37:23 by amairia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-static char	*feed_res(char *res, char const *s1, char const *s2)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	size_t	i;
-	size_t	j;
+	t_list	*res;
+	t_list	*tmp;
 
-	i = 0;
-	j = 0;
-	while (s1[i])
-	{
-		res[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-		res[i++] = s2[j++];
-	return (res);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*res;
-	size_t	i;
-	size_t	j;
-
-	if (!s1 || !s2)
+	if (!lst || !f || !del)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i] || s2[j])
-	{
-		if (s1[i])
-			i++;
-		if (s2[j])
-			j++;
-	}
-	res = ft_calloc(i + j + 1, sizeof(char));
+	res = ft_lstnew(f(lst->content));
 	if (!res)
 		return (NULL);
-	return (feed_res(res, s1, s2));
+	tmp = res;
+	lst = lst->next;
+	while (lst)
+	{
+		tmp->next = ft_lstnew(f(lst->content));
+		if (!tmp->next)
+		{
+			ft_lstclear(&res, del);
+			return (NULL);
+		}
+		tmp = tmp->next;
+		lst = lst->next;
+	}
+	tmp->next = NULL;
+	return (res);
 }
